@@ -1,0 +1,58 @@
+name: redis-api-demo
+
+services:
+  redis:
+    image: redis:alpine
+    container_name: redis-api-demo-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - redis-api-demo-network
+
+  mysql:
+    image: mysql:8.0
+    container_name: redis-api-demo-mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: redis-api-demo
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - redis-api-demo-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: redis-api-demo-phpmyadmin
+    ports:
+      - "3307:80"
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: password
+    depends_on:
+      - mysql
+    networks:
+      - redis-api-demo-network
+  # api:
+  #   build: .
+  #   container_name: redis-api-demo-api
+  #   ports:
+  #     - "8000:8000"
+  #   depends_on:
+  #     - redis
+  #   networks:
+  #     - redis-api-demo-network
+
+volumes:
+  redis_data:
+  mysql_data:
+
+
+networks:
+  redis-api-demo-network:
+    driver: bridge
