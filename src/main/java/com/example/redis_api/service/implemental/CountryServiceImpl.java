@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
@@ -103,5 +104,18 @@ public class CountryServiceImpl implements CountryService {
     public void deleteCountry(Long id) {
         log.info(">>> Delete COUNTRY in MASTER DB");
         countryRepository.deleteById(id);
+    }
+
+    @Override
+    @CachePut(value = "master:country", key = "'list'")
+    public List<Country> refreshAllCountries() {
+        log.info(">>> Refresh COUNTRY LIST in REDIS from MASTER DB");
+        return countryRepository.findAll();
+    }
+
+    @Override
+    @CacheEvict(value = "master:country", key = "'list'")
+    public void clearAllCountries() {
+        log.info(">>> Clear COUNTRY LIST in REDIS");
     }
 }

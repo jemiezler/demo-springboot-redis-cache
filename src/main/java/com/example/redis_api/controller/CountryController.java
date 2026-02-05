@@ -32,11 +32,6 @@ public class CountryController {
         return countryService.getAllCountries();
     }
 
-    @GetMapping("/cache")
-    public List<Country> getAllCountriesFromRedis() {
-        return countryService.getAllCountriesFromRedis();
-    }
-
     @GetMapping("/{id}")
     @Operation(summary = "Get Country By Id", description = "Get Country By Id")
     public Country getCountryById(@PathVariable Long id) {

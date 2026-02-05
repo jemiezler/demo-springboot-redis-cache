@@ -17,4 +17,8 @@ public interface CountryService {
     Country updateCountry(Long id, Country country);
 
     void deleteCountry(Long id);
+
+    List<Country> refreshAllCountries();
+
+    void clearAllCountries();
 }
