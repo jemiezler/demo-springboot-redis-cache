@@ -8,12 +8,9 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @Entity
-@Table(
-    name = "country",
-    uniqueConstraints = {
+@Table(name = "country", uniqueConstraints = {
         @UniqueConstraint(columnNames = "code")
-    }
-)
+})
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor

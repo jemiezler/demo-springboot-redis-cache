@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.example.redis_api.entity.Country;
 
-
 public interface CountryService {
 
     List<Country> getAllCountries();

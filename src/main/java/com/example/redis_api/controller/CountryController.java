@@ -18,7 +18,6 @@ import com.example.redis_api.service.CountryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-
 @RestController
 @RequestMapping("/api/country")
 @Tag(name = "Country", description = "Country API")
@@ -28,10 +27,7 @@ public class CountryController {
     private CountryService countryService;
 
     @GetMapping
-    @Operation(
-        summary = "Get All Countries",
-        description = "Get All Countries"
-    )
+    @Operation(summary = "Get All Countries", description = "Get All Countries")
     public List<Country> getAllCountries() {
         return countryService.getAllCountries();
     }
@@ -40,42 +36,29 @@ public class CountryController {
     public List<Country> getAllCountriesFromRedis() {
         return countryService.getAllCountriesFromRedis();
     }
-    
 
     @GetMapping("/{id}")
-    @Operation(
-        summary = "Get Country By Id",
-        description = "Get Country By Id"
-    )
+    @Operation(summary = "Get Country By Id", description = "Get Country By Id")
     public Country getCountryById(@PathVariable Long id) {
         return countryService.getCountryById(id);
     }
 
     @PostMapping
-    @Operation(
-        summary = "Create Country",
-        description = "Create Country"
-    )
+    @Operation(summary = "Create Country", description = "Create Country")
     public Country createCountry(@RequestBody Country country) {
         return countryService.createCountry(country);
     }
 
     @PutMapping("/{id}")
-    @Operation(
-        summary = "Update Country",
-        description = "Update Country"
-    )
+    @Operation(summary = "Update Country", description = "Update Country")
     public Country updateCountry(@PathVariable Long id, @RequestBody Country country) {
         return countryService.updateCountry(id, country);
     }
 
     @DeleteMapping("/{id}")
-    @Operation(
-        summary = "Delete Country",
-        description = "Delete Country"
-    )
+    @Operation(summary = "Delete Country", description = "Delete Country")
     public void deleteCountry(@PathVariable Long id) {
         countryService.deleteCountry(id);
     }
-    
+
 }

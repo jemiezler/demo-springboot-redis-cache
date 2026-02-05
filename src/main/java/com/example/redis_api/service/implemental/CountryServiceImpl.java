@@ -16,18 +16,14 @@ import com.example.redis_api.entity.Country;
 import com.example.redis_api.repository.CountryRepository;
 import com.example.redis_api.service.CountryService;
 
-
-
-
 @Service
 public class CountryServiceImpl implements CountryService {
 
     @Autowired
-    private CountryRepository countryRepository;  
+    private CountryRepository countryRepository;
     @Autowired
     private CacheManager cacheManager;
     private static final Logger log = LoggerFactory.getLogger(CountryServiceImpl.class);
-
 
     /**
      * Cache list of countries
@@ -56,6 +52,7 @@ public class CountryServiceImpl implements CountryService {
         log.info(">>> COUNTRY LIST cache HIT (cache-only)");
         return (List<Country>) wrapper.get();
     }
+
     /**
      * Cache country by id
      */
@@ -81,8 +78,8 @@ public class CountryServiceImpl implements CountryService {
      */
     @Override
     @Caching(evict = {
-        @CacheEvict(value = "master:country", key = "'list'"),
-        @CacheEvict(value = "master:country", key = "#id")
+            @CacheEvict(value = "master:country", key = "'list'"),
+            @CacheEvict(value = "master:country", key = "#id")
     })
     public Country updateCountry(Long id, Country country) {
         log.info(">>> Update COUNTRY in MASTER DB");
@@ -100,8 +97,8 @@ public class CountryServiceImpl implements CountryService {
      */
     @Override
     @Caching(evict = {
-        @CacheEvict(value = "master:country", key = "'list'"),
-        @CacheEvict(value = "master:country", key = "#id")
+            @CacheEvict(value = "master:country", key = "'list'"),
+            @CacheEvict(value = "master:country", key = "#id")
     })
     public void deleteCountry(Long id) {
         log.info(">>> Delete COUNTRY in MASTER DB");
